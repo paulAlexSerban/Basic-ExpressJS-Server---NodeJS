@@ -16,16 +16,33 @@ app.get('/', (req, res) => {
   res.send('this is the homepage');
 });
 
+
+app.get('/r/:subreddit', (req, res) => {
+  const { subreddit } = req= req.params;
+  res.send(`<h1>Browsing subreddit ${subreddit}</h1>`);
+})
+
+app.get('/r/:subreddit/:postId', (req, res) => {
+  const { subreddit, postId } = req= req.params;
+  res.send(`<h1>Browsing post ${postId} of subreddit ${subreddit}</h1>`);
+})
+
 app.post('/cats', (req, res) => {
-  res.send('post request for /cats  !!!');
+  res.send('POST request for /cats  !!!');
 })
 
 app.get('/cats', (req, res) => {
-  res.send('meow!!!');
+  res.send('GET request for /cats');
 });
 
-app.get('/dogs', (req, res) => {
-  res.send('woff!!!')
+app.get('/search', (req, res) => {
+  const { q } = req.query;
+  if(!q) {
+    res.send(`<h1>nothing found if not searched</h1>`);
+  } else {
+    res.send(`<h1>search results for: ${ q }</h1>`);
+  }
+  
 });
 
 app.get('*', (req, res) => { // for generic bad requests this should always be the last in the list of responses
