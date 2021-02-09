@@ -3,6 +3,10 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+app.use(express.urlencoded({extended: true})); // this is needed to parse post requests, without it post requests body is `undefined`
+
+app.use(express.json()); // this is needed to parse json payloads
+
 // app.use((req, res) => {
 //   console.log(`We got a new request: ${req}`);
 //   console.dir(req);
@@ -28,10 +32,13 @@ app.get('/r/:subreddit/:postId', (req, res) => {
 })
 
 app.post('/cats', (req, res) => {
-  res.send('POST request for /cats  !!!');
+  console.log(req.body);
+  const { kitty, qty } = req.body;
+  res.send(`POST request for /cats  !!! is ${kitty} and ${qty}`);
 })
 
 app.get('/cats', (req, res) => {
+  console.log(req);
   res.send('GET request for /cats');
 });
 
